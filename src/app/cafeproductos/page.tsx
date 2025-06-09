@@ -23,6 +23,8 @@ interface Cafe {
   tipo: string;
   notas: string;
   tueste: string;
+  kilos: number;
+  estado: 'molido' | 'grano';
 }
 
 export default function Cafe() {
@@ -50,7 +52,9 @@ export default function Cafe() {
           intensidad: data.intensidad,
           tipo: data.tipo,
           notas: data.notas,
-          tueste: data.tueste
+          tueste: data.tueste,
+          kilos: data.kilos,
+          estado: data.estado
         });
       });
 
@@ -149,6 +153,8 @@ export default function Cafe() {
                     <p><strong>Tipo:</strong> {cafe.tipo}</p>
                     <p><strong>Intensidad:</strong> {cafe.intensidad}/10</p>
                     <p><strong>Tueste:</strong> {cafe.tueste}</p>
+                    <p><strong>Kilos:</strong> {cafe.kilos} kg</p>
+                    <p><strong>Estado:</strong> {cafe.estado === 'grano' ? 'En Grano' : 'Molido'}</p>
                     {cafe.notas && <p><strong>Notas:</strong> {cafe.notas}</p>}
                   </div>
                   <p className="precio">${cafe.precio} MXN</p>

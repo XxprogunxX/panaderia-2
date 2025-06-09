@@ -49,6 +49,8 @@ type Cafe = {
   tipo: string;
   notas: string;
   tueste: string;
+  kilos: number;
+  estado: 'molido' | 'grano';
 };
 
 const PanelControl = () => {
@@ -74,7 +76,9 @@ const PanelControl = () => {
     intensidad: 3,
     tipo: "Arábica",
     notas: "",
-    tueste: "Medio"
+    tueste: "Medio",
+    kilos: 1,
+    estado: "grano"
   });
   const [nuevaCategoria, setNuevaCategoria] = useState({ nombre: "" });
   const [edicionId, setEdicionId] = useState<string | null>(null);
@@ -165,7 +169,9 @@ const cargarDatosIniciales = async () => {
         intensidad: data.intensidad ?? 3,
         tipo: data.tipo || "",
         notas: data.notas || "",
-        tueste: data.tueste || ""
+        tueste: data.tueste || "",
+        kilos: data.kilos ?? 1,
+        estado: data.estado || "grano"
       });
     });
     setCafes(lista);
@@ -354,6 +360,8 @@ const cargarDatosIniciales = async () => {
         tipo: nuevoCafe.tipo,
         notas: nuevoCafe.notas,
         tueste: nuevoCafe.tueste,
+        kilos: nuevoCafe.kilos,
+        estado: nuevoCafe.estado,
         updatedAt: new Date().toISOString(),
         ...(!edicionCafeId && { createdAt: new Date().toISOString() })
       };
@@ -373,7 +381,9 @@ const cargarDatosIniciales = async () => {
         intensidad: 3,
         tipo: "Arábica",
         notas: "",
-        tueste: "Medio"
+        tueste: "Medio",
+        kilos: 1,
+        estado: "grano"
       });
       setEdicionCafeId(null);
       
@@ -413,7 +423,9 @@ const cargarDatosIniciales = async () => {
       intensidad: cafe.intensidad,
       tipo: cafe.tipo,
       notas: cafe.notas,
-      tueste: cafe.tueste
+      tueste: cafe.tueste,
+      kilos: cafe.kilos,
+      estado: cafe.estado
     });
     setEdicionCafeId(cafe.id || null);
     setError(null);
@@ -812,6 +824,30 @@ const cargarDatosIniciales = async () => {
                 </div>
 
                 <div className="form-group">
+                  <label>Kilos *</label>
+                  <input
+                    type="number"
+                    min="0.25"
+                    step="0.25"
+                    value={nuevoCafe.kilos}
+                    onChange={(e) => setNuevoCafe({ ...nuevoCafe, kilos: parseFloat(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Estado del Café *</label>
+                  <select
+                    value={nuevoCafe.estado}
+                    onChange={(e) => setNuevoCafe({ ...nuevoCafe, estado: e.target.value as 'molido' | 'grano' })}
+                    required
+                  >
+                    <option value="grano">En Grano</option>
+                    <option value="molido">Molido</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
                   <label>Imagen {!edicionCafeId && "*"}</label>
                   <input
                     type="file"
@@ -858,7 +894,9 @@ const cargarDatosIniciales = async () => {
                           intensidad: 3,
                           tipo: "Arábica",
                           notas: "",
-                          tueste: "Medio"
+                          tueste: "Medio",
+                          kilos: 1,
+                          estado: "grano"
                         });
                       }}
                       disabled={cargando}
@@ -894,6 +932,8 @@ const cargarDatosIniciales = async () => {
                           <p className="tipo"><strong>Tipo:</strong> {cafe.tipo}</p>
                           <p className="intensidad"><strong>Intensidad:</strong> {cafe.intensidad}/10</p>
                           <p className="tueste"><strong>Tueste:</strong> {cafe.tueste}</p>
+                          <p className="kilos"><strong>Kilos:</strong> {cafe.kilos} kg</p>
+                          <p className="estado"><strong>Estado:</strong> {cafe.estado === 'grano' ? 'En Grano' : 'Molido'}</p>
                           {cafe.descripcion && (
                             <p className="descripcion"><strong>Descripción:</strong> {cafe.descripcion}</p>
                           )}
