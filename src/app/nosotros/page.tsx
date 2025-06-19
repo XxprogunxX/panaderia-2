@@ -146,7 +146,7 @@ export default function NosotrosPage() {
               <div className="miembro-info">
                 <h3>Don Javier Martínez</h3>
                 <p>Fundador y Maestro Panadero</p>
-                <p className="miembro-desc">"La paciencia y el amor son los ingredientes secretos"</p>
+                <p className="miembro-desc">&ldquo;La paciencia y el amor son los ingredientes secretos&rdquo;</p>
               </div>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function NosotrosPage() {
               <div className="miembro-info">
                 <h3>Ana López</h3>
                 <p>Jefa de Repostería</p>
-                <p className="miembro-desc">"Cada postre cuenta una historia dulce"</p>
+                <p className="miembro-desc">&ldquo;Cada postre cuenta una historia dulce&rdquo;</p>
               </div>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function NosotrosPage() {
               <div className="miembro-info">
                 <h3>Carlos Ramírez</h3>
                 <p>Atención al Cliente</p>
-                <p className="miembro-desc">"Me encanta recomendar el pan perfecto para cada persona"</p>
+                <p className="miembro-desc">&ldquo;Me encanta recomendar el pan perfecto para cada persona&rdquo;</p>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function NosotrosPage() {
           <div className="testimonios-grid">
             <div className="testimonio-card">
               <div className="testimonio-texto">
-                "El mejor pan de muerto que he probado en mi vida. Sabe exactamente como el que hacía mi abuela"
+                &ldquo;El mejor pan de muerto que he probado en mi vida. Sabe exactamente como el que hacía mi abuela&rdquo;
               </div>
               <div className="testimonio-autor">
                 <Image
@@ -235,7 +235,7 @@ export default function NosotrosPage() {
             </div>
             <div className="testimonio-card">
               <div className="testimonio-texto">
-                "No hay mejor manera de empezar el día que con un café y una concha recién horneada"
+                &ldquo;No hay mejor manera de empezar el día que con un café y una concha recién horneada&rdquo;
               </div>
               <div className="testimonio-autor">
                 <Image

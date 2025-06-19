@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { auth } from '../firebaseConfig';
 import styles from './LoginForm.module.css';
 
@@ -21,9 +22,10 @@ export default function PasswordReset() {
     try {
       await sendPasswordResetEmail(auth, email);
       setSuccess('Se ha enviado un correo para restablecer tu contraseña');
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const firebaseError = error as FirebaseError;
       let errorMessage = 'Error al enviar el correo';
-      switch (error.code) {
+      switch (firebaseError.code) {
         case 'auth/user-not-found':
           errorMessage = 'Usuario no encontrado';
           break;
@@ -31,7 +33,7 @@ export default function PasswordReset() {
           errorMessage = 'Correo electrónico inválido';
           break;
         default:
-          errorMessage = error.message;
+          errorMessage = firebaseError.message;
       }
       setError(errorMessage);
     } finally {

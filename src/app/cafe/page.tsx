@@ -1,5 +1,6 @@
 import './cafe.css'; // Asegúrate de que tu CSS esté importado
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function CafePage() {
   return (
@@ -11,15 +12,15 @@ export default function CafePage() {
             {/* Contenedor para el logo y el nombre de la cafetería (parte izquierda de la navbar) */}
             <div className="navbar-brand-container"> {/* NUEVO CONTENEDOR */}
               
-              <a href="/" className="nav-link logo-text">Cafetería</a> {/* El texto del nombre de la cafetería */}
+              <Link href="/" className="nav-link logo-text">Cafetería</Link> {/* El texto del nombre de la cafetería */}
             </div>
 
             {/* Links de navegación y (opcionalmente) el icono de búsqueda (parte derecha de la navbar) */}
             <div className="navbar-links-container"> {/* Renombrado para claridad */}
-              <a href="/cafe" className="nav-link">Inicio</a> {/* Corregí el enlace a "Inicio" */}
-              <a href="/cafeproductos" className="nav-link">Productos</a>
-              <a href="/" className="nav-link">Panadería</a> {/* Asumo que tienes una página /panaderia */}
-              <a href="#testimonios" className="nav-link">Testimonios</a>
+              <Link href="/cafe" className="nav-link">Inicio</Link> {/* Corregí el enlace a "Inicio" */}
+              <Link href="/cafeproductos" className="nav-link">Productos</Link>
+              <Link href="/" className="nav-link">Panadería</Link> {/* Asumo que tienes una página /panaderia */}
+              <Link href="#testimonios" className="nav-link">Testimonios</Link>
 
               <Image
                 src="/images/logo-cafe.png" // <--- RUTA DE TU LOGO DE CAFETERÍA
@@ -46,10 +47,10 @@ export default function CafePage() {
 
         {/* Sección de enlaces de menú inferior */}
         <section className="info-nav-links">
-          <a href="#menu" className="info-nav-link">El Menú</a>
-          <a href="#info-cafeteria" className="info-nav-link">Información La Cafetería</a>
-          <a href="#ubicacion" className="info-nav-link">Ubicación</a>
-          <a href="#contacto" className="info-nav-link">Contacto</a>
+          <Link href="#menu" className="info-nav-link">El Menú</Link>
+          <Link href="#info-cafeteria" className="info-nav-link">Información La Cafetería</Link>
+          <Link href="#ubicacion" className="info-nav-link">Ubicación</Link>
+          <Link href="#contacto" className="info-nav-link">Contacto</Link>
         </section>
 
         <section id="productos" className="productos">

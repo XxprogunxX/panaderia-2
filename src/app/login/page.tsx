@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { auth } from '../firebaseConfig';
 import styles from './LoginForm.module.css';
 
@@ -20,8 +21,9 @@ export default function LoginForm() {
       await createUserWithEmailAndPassword(auth, email, password);
       // Aquí puedes agregar el username a tu base de datos si es necesario
       router.push('/');
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      const firebaseError = error as FirebaseError;
+      setError(firebaseError.message);
       console.error('Error al registrar:', error);
     }
   };
@@ -32,8 +34,9 @@ export default function LoginForm() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/paneldecontrol');
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      const firebaseError = error as FirebaseError;
+      setError(firebaseError.message);
       console.error('Error al iniciar sesión:', error);
     }
   };

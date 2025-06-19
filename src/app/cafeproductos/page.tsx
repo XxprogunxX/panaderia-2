@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useCarrito } from "../components/usecarrito";
-import { useMercadoPago } from "../components/useMercadopago";
-import { strong } from "framer-motion/client";
 
 interface Cafe {
   id?: string;
@@ -33,7 +31,6 @@ export default function Cafe() {
   const [busqueda, setBusqueda] = useState("");
 
   const { carrito, agregarAlCarrito, eliminarDelCarrito, mostrarCarrito, toggleCarrito, total } = useCarrito();
-  const { cargandoPago, handlePagar } = useMercadoPago();
 
   useEffect(() => {
     const obtenerCafes = async () => {
@@ -89,14 +86,14 @@ export default function Cafe() {
     <main className="cafe-page">
       <nav className="navbar">
         <div className="navbar-brand-container">
-          <a href="/" className="nav-link logo-text">Cafetería</a>
+          <Link href="/" className="nav-link logo-text">Cafetería</Link>
         </div>
 
         <div className="navbar-links-container">
-          <a href="/cafe" className="nav-link">Inicio</a>
-          <a href="/cafeproductos" className="nav-link">Productos</a>
-          <a href="/" className="nav-link">Panadería</a>
-          <a href="#testimonios" className="nav-link">Testimonios</a>
+          <Link href="/cafe" className="nav-link">Inicio</Link>
+          <Link href="/cafeproductos" className="nav-link">Productos</Link>
+          <Link href="/" className="nav-link">Panadería</Link>
+          <Link href="#testimonios" className="nav-link">Testimonios</Link>
 
           <Image
             src="/images/logo-cafe.png"

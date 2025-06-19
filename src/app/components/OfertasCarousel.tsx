@@ -59,7 +59,7 @@ const OfertasCarousel = () => {
     arrows: true,
     fade: true,
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
-    beforeChange: (_: any, next: number) => setCurrentSlide(next),
+    beforeChange: (_: number, next: number) => setCurrentSlide(next),
     responsive: [
       {
         breakpoint: 768,

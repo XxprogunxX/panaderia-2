@@ -1,15 +1,12 @@
 "use client";
 
-
 import Image from "next/image";
 import Link from "next/link";
 import "./styles.css";
 import { useState, useEffect } from "react";
 import HelpPopup from "./components/bolita-de-ayuda/bolita";
-import { image } from "framer-motion/client";
-import { url } from "inspector";
 import { db } from "./firebaseConfig";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import OfertasCarousel from "./components/OfertasCarousel";
 
 interface Producto {

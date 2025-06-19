@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { createClient } from '@supabase/supabase-js';
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import "./panel.css"; // Importa el archivo CSS
 
 // Configura Supabase
@@ -34,7 +34,7 @@ type Usuario = {
   displayName: string | null;
   photoURL: string | null;
   emailVerified: boolean;
-  providerData: any[];
+  providerData: unknown[];
 };
 
 type Cafe = {
@@ -109,24 +109,25 @@ const PanelControl = () => {
     }
   };
 
+  const cargarDatosIniciales = useCallback(async () => {
+    setCargando(true);
+    setError(null);
+    try {
+      await Promise.all([cargarProductos(), cargarCategorias(), cargarCafes()]);
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+      setError(`Error al cargar los datos iniciales: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setCargando(false);
+    }
+  }, []);
+
   // Cargar datos iniciales
   useEffect(() => {
     cargarDatosIniciales();
     cargarUsuarios();
-  }, []);
+  }, [cargarDatosIniciales]);
 
-const cargarDatosIniciales = async () => {
-  setCargando(true);
-  setError(null);
-  try {
-    await Promise.all([cargarProductos(), cargarCategorias(), cargarCafes()]);
-  } catch (error) {
-    console.error("Error cargando datos:", error);
-    setError(`Error al cargar los datos iniciales: ${error instanceof Error ? error.message : String(error)}`);
-  } finally {
-    setCargando(false);
-  }
-};
   // Cargar productos desde Firestore
   const cargarProductos = async () => {
     try {
@@ -153,33 +154,33 @@ const cargarDatosIniciales = async () => {
 
   // Cargar cafés desde Firestore
   const cargarCafes = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "cafes"));
-    const lista: Cafe[] = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      lista.push({
-        id: doc.id,
-        nombre: data.nombre || "",
-        precio: data.precio ? data.precio.toString() : "",
-        descripcion: data.descripcion || "",
-        imagen: null,
-        imagenUrl: data.imagenUrl || "",
-        origen: data.origen || "",
-        intensidad: data.intensidad ?? 3,
-        tipo: data.tipo || "",
-        notas: data.notas || "",
-        tueste: data.tueste || "",
-        kilos: data.kilos ?? 1,
-        estado: data.estado || "grano"
+    try {
+      const querySnapshot = await getDocs(collection(db, "cafes"));
+      const lista: Cafe[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        lista.push({
+          id: doc.id,
+          nombre: data.nombre || "",
+          precio: data.precio ? data.precio.toString() : "",
+          descripcion: data.descripcion || "",
+          imagen: null,
+          imagenUrl: data.imagenUrl || "",
+          origen: data.origen || "",
+          intensidad: data.intensidad ?? 3,
+          tipo: data.tipo || "",
+          notas: data.notas || "",
+          tueste: data.tueste || "",
+          kilos: data.kilos ?? 1,
+          estado: data.estado || "grano"
+        });
       });
-    });
-    setCafes(lista);
-  } catch (error) {
-    console.error("Error cargando cafés:", error);
-    throw new Error("No se pudieron cargar los cafés");
-  }
-};
+      setCafes(lista);
+    } catch (error) {
+      console.error("Error cargando cafés:", error);
+      throw new Error("No se pudieron cargar los cafés");
+    }
+  };
 
   // Cargar categorías desde Firestore
   const cargarCategorias = async () => {
@@ -1032,7 +1033,7 @@ const cargarDatosIniciales = async () => {
                             <p><strong>Email:</strong> {usuario.email || 'No proporcionado'}</p>
                             <p><strong>ID:</strong> {usuario.uid}</p>
                             <p><strong>Verificado:</strong> {usuario.emailVerified ? 'Sí' : 'No'}</p>
-                            <p><strong>Proveedor:</strong> {usuario.providerData[0]?.providerId}</p>
+                            <p><strong>Proveedor:</strong> {(usuario.providerData[0] as { providerId?: string })?.providerId || 'No disponible'}</p>
                           </div>
                         </div>
                         <div className="usuario-acciones">
